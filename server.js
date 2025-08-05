@@ -1,3 +1,4 @@
+
 const WebSocket = require('ws');
 const PORT = process.env.PORT || 3000;
 
@@ -8,8 +9,13 @@ server.on('connection', socket => {
 
   socket.on('message', message => {
     console.log(`Received: ${message}`);
-    //socket.send(`Echo: ${message}`);
-    socket.send(message);
+
+    // Broadcast to all connected clients
+    server.clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
   });
 
   socket.on('close', () => {
