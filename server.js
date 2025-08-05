@@ -8,7 +8,8 @@ server.on('connection', socket => {
 
   socket.on('message', message => {
     console.log(`Received: ${message}`);
-    socket.send(`Echo: ${message}`);
+    //socket.send(`Echo: ${message}`);
+    socket.send(message);
   });
 
   socket.on('close', () => {
